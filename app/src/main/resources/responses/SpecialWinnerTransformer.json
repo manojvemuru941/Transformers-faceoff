@@ -1,0 +1,46 @@
+{
+  "transformers" : [
+    {
+      "courage" : 1,
+      "endurance" : 6,
+      "firepower" : 6,
+      "id" : "-LN2f__Egk2j30-JvcN2",
+      "intelligence" : 9,
+      "name" : "Optimus Prime",
+      "rank" : 7,
+      "skill" : 10,
+      "speed" : 2,
+      "strength" : 2,
+      "team" : "D",
+      "team_icon" : "https://tfwiki.net/mediawiki/images2/archive/8/8d/20110410191659%21Symbol_decept_reg.png"
+    },
+    {
+      "courage" : 8,
+      "endurance" : 9,
+      "firepower" : 9,
+      "id" : "-LN2gBoEJbQ1aL2s5XA7",
+      "intelligence" : 6,
+      "name" : "BluestreakTest",
+      "rank" : 5,
+      "skill" : 7,
+      "speed" : 7,
+      "strength" : 8,
+      "team" : "A",
+      "team_icon" : "https://tfwiki.net/mediawiki/images2/archive/f/fe/20110410191732%21Symbol_autobot_reg.png"
+    },
+    {
+      "courage" : 4,
+      "endurance" : 4,
+      "firepower" : 4,
+      "id" : "-LN2hILElvJvHrgG0h4-",
+      "intelligence" : 4,
+      "name" : "HubcapTest",
+      "rank" : 4,
+      "skill" : 4,
+      "speed" : 4,
+      "strength" : 4,
+      "team" : "D",
+      "team_icon" : "https://tfwiki.net/mediawiki/images2/archive/8/8d/20110410191659%21Symbol_decept_reg.png"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="criteria_text_style">
+        <item name="android:layout_margin">@dimen/text_margin</item>
+        <item name="android:textSize">@dimen/criteria_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="list_item_name_text_style">
+        <item name="android:layout_margin">@dimen/criteria_list_item_margin</item>
+        <item name="android:textSize">@dimen/criteria_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="criteria_list_item_text_style">
+        <item name="android:layout_margin">@dimen/criteria_list_item_margin</item>
+        <item name="android:textSize">@dimen/criteria_list_item_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="save_button_style" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:text">@string/save</item>
+        <item name="android:textSize">@dimen/save_button_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_height">@dimen/save_button_height</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="war_button_style" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:text">@string/war</item>
+        <item name="android:textSize">@dimen/war_button_text_size</item>
+        <item name="android:layout_height">@dimen/save_button_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:padding">@dimen/fab_margin</item>
+    </style>
+
+    <style name="dailog_title_style" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:text">@string/war_result</item>
+        <item name="android:textSize">@dimen/war_button_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:padding">@dimen/fab_margin</item>
+    </style>
+
+    <style name="dailog_content_style">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/war_button_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:padding">@dimen/fab_margin</item>
+    </style>
+
+    <style name="radio_button_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/criteria_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Dialog_Theme" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+</resources>
