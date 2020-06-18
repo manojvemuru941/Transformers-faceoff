@@ -3,7 +3,19 @@ The Transformers are at war and you are in charge of settling the score!
 This application evaluates who wins a fight between the Autobots and the Decepticons.
 
 # Project Architecture - MVVM  
-![Alt text](https://google-developer-training.gitbooks.io/android-developer-advanced-course-practicals/images/14-1-a-room-livedata-viewmodel/dg_architecture_comonents.png?raw=true "MVVM")
+
+# What is MVVM?
+There are 3 parts to the Model-View-ViewModel architecture:
+
+**Model** is the data layer of your app. It abstracts the data source.
+
+**View** contains the UI of your app. Most often it’s implemented as an Activity or Fragment. View informs ViewModel of user interactions and displays results received from the ViewModel. View should be lightweight and contain zero to very little business logic.
+
+**ViewModel** serves as a bridge between your View and Model. It works with the Model to get and save the data. The View observes and reacts to the data changes exposed by the ViewModel.
+
+Here is a typical high level MVVM app architecture:
+
+![Alt text](https://cdn-images-1.medium.com/max/800/1*tO9RsrblUPOv_u0loUM97g.png)
 
 ## Componenets
 Because all the components interact, you will encounter references to these components throughout this practical, so here is a short explanation of each.
@@ -21,9 +33,9 @@ Short for data access object . A mapping of SQL queries to functions. You used t
 Class Names : AppDBService<br />
 Database layer on top of a SQLite database that takes care of mundane tasks that you used to handle with a helper class. The Room database uses the DAO to issue queries to the SQLite database based on functions called.
 
-## Model
-Class Names : Model<br />
-A class that you create for managing multiple data sources. In addition to a Room database, the Model could manage remote data sources such as a web server.
+## Repository
+Class Names : TransformersRepository<br />
+A class that you create for managing multiple data sources. the TransformersRepository could manage remote data sources such as a web server.
 
 ## ViewModel
 Class Names : MainViewModel, DetailViewModel<br />
