@@ -33,9 +33,9 @@ Short for data access object . A mapping of SQL queries to functions. You used t
 Class Names : AppDBService<br />
 Database layer on top of a SQLite database that takes care of mundane tasks that you used to handle with a helper class. The Room database uses the DAO to issue queries to the SQLite database based on functions called.
 
-## Model
-Class Names : Model<br />
-A class that you create for managing multiple data sources. In addition to a Room database, the Model could manage remote data sources such as a web server.
+## Repository
+Class Names : TransformersRepository<br />
+A class that you create for managing multiple data sources. the TransformersRepository could manage remote data sources such as a web server.
 
 ## ViewModel
 Class Names : MainViewModel, DetailViewModel<br />
