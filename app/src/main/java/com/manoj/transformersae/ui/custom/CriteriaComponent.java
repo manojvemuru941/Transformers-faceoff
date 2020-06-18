@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.cardview.widget.CardView;
 
 import com.manoj.transformersae.R;
@@ -73,5 +74,10 @@ public class CriteriaComponent extends CardView {
 
     public int getCriteriaValue() {
         return Integer.parseInt(mCriteriaValue.getText().toString());
+    }
+
+    @VisibleForTesting
+    public String getCriteriaName() {
+        return mCriteriaName.getText().toString();
     }
 }

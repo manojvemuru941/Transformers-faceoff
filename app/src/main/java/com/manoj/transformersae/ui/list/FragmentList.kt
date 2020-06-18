@@ -27,7 +27,7 @@ class FragmentList : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.list_fragment, container, false)
         mRecyclerView = rootView.findViewById(R.id.bot_list)
-        // Create the grid layout manager with 2 columns.
+        // Create the grid progress_layout manager with 2 columns.
         val gridLayoutManager = GridLayoutManager(activity, 2)
         mRecyclerView?.layoutManager = gridLayoutManager
         mAdapter = Adapter((activity as MainActivity?)!!, ArrayList())

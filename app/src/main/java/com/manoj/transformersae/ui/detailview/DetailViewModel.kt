@@ -5,7 +5,6 @@ import com.manoj.transformersae.R
 import com.manoj.transformersae.base.BaseViewModel
 import com.manoj.transformersae.base.ResourceState
 import com.manoj.transformersae.base.ViewState
-import com.manoj.transformersae.custom.SingleLiveEvent
 import com.manoj.transformersae.model.BotModel
 import com.manoj.transformersae.util.AppUtill
 import com.manoj.transformersae.util.AppUtill.getAppContext
@@ -18,7 +17,6 @@ import kotlinx.coroutines.async
  */
 class DetailViewModel : BaseViewModel() {
     private lateinit var mBotModel: BotModel
-    val mutableBotLiveData = SingleLiveEvent<Result<BotModel>>()
 
     fun getBotModel(): BotModel {
         return mBotModel
@@ -38,8 +36,8 @@ class DetailViewModel : BaseViewModel() {
                         is ResourceState.Success<*> -> {
                             viewModelScope.async {
                                 appDBService.botDao().insertBot(it.data as BotModel)
+                                mutableViewType.postValue(ViewState.MainView())
                             }
-                            mutableViewType.value = ViewState.MainView()
                         }
                         is ResourceState.ServerError -> {
                             onAsyncFinish()

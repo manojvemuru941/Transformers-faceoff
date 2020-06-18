@@ -1,7 +1,6 @@
 package com.manoj.transformersae.ui
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.manoj.transformersae.R
 import com.manoj.transformersae.base.BaseViewModel
 import com.manoj.transformersae.base.ResourceState
@@ -9,7 +8,6 @@ import com.manoj.transformersae.model.BotModel
 import com.manoj.transformersae.util.AppUtill
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.async
 import java.util.*
 
 /**
@@ -27,6 +25,7 @@ class MainViewModel : BaseViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onAsyncStart() }
                 .subscribe({
+                    onAsyncFinish()
                     allBots = it
                     mutableBotListLiveData.value = it
                 },
@@ -49,7 +48,7 @@ class MainViewModel : BaseViewModel() {
 
     fun startWar() {
         disposables.add(transformersRepository.launchWar(allBots)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onAsyncStart() }
                 .subscribe({
@@ -58,10 +57,10 @@ class MainViewModel : BaseViewModel() {
                             mutableBotWarResponseLiveData.value = it.data as String
                         }
                         else -> {
-                            onAsyncFinish()
                             onError(AppUtill.getStringResource(R.string.something_wrong))
                         }
                     }
+                    onAsyncFinish()
                 }, { err ->
                     onError(err.localizedMessage)
                     onAsyncFinish()
@@ -71,22 +70,23 @@ class MainViewModel : BaseViewModel() {
 
     fun deleteBot(botModel: BotModel) {
         disposables.add(transformersRepository.deleteTransformer(botModel, AppUtill.getSavedToken(AppUtill.getAppContext()))
-                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap { state ->  transformersRepository.removeBotModel(state, botModel, appDBService.botDao())}
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onAsyncStart() }
                 .subscribe({
-                    when (it) {
-                        is ResourceState.Success<*> -> {
-                            viewModelScope.async {
-                                appDBService.botDao().deleteBot(botModel)
-                            }
+                    when(it) {
+                        is ResourceState.Success<*>  -> {
                             requestToRefreshList()
                         }
-                        else -> {
-                            onAsyncFinish()
+                        is ResourceState.ServerError -> {
+                            onServerError(it.throwable)
+                        }
+                        is ResourceState.Failure -> {
                             onError(AppUtill.getStringResource(R.string.something_wrong))
                         }
                     }
+                    onAsyncFinish()
                 }, { err ->
                     onError(err.localizedMessage)
                     onAsyncFinish()

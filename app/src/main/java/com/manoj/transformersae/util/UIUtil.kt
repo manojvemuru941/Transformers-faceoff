@@ -1,7 +1,6 @@
 package com.manoj.transformersae.util
 
 import android.app.Activity
-import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.manoj.transformersae.R
 
@@ -16,10 +15,6 @@ class UIUtil {
             return AlertDialog.Builder(context, R.style.Dialog_Theme)
                 .setTitle(title)
                 .setCancelable(isCancelable)
-        }
-
-        fun pxFromDp(context: Context, dp: Float): Float {
-            return dp * context.resources.displayMetrics.density
         }
     }
 }

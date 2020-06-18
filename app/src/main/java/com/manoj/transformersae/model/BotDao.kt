@@ -1,8 +1,6 @@
 package com.manoj.transformersae.model
 
-import androidx.annotation.VisibleForTesting
 import androidx.room.*
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 /**
@@ -24,12 +22,11 @@ interface BotDao {
     fun insertAllBot(botModelList: List<BotModel?>?)
 
     @Delete
-    suspend fun deleteBot(botModel: BotModel?)
+    fun deleteBot(botModel: BotModel?)
 
     @Update
     suspend fun updateBot(botModel: BotModel?)
 
-    @VisibleForTesting
     @Query("DELETE FROM botmodel")
     fun deleteAll()
 }

@@ -15,6 +15,7 @@ import io.reactivex.subjects.PublishSubject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.Callable
 
 /**
  * Created by Manoj Vemuru on 2020-06-16.
@@ -29,7 +30,7 @@ class TransformersRepository(private val restService: RestService) {
         return handler.publishSubject
     }
 
-    fun storeTransformer(botModel: BotModel, id: String) : Observable<ResourceState> {
+    fun storeTransformer(botModel: BotModel, id: String): Observable<ResourceState> {
         val handler = RequestHandler<BotModel>()
         if (checkInternetConnection(handler))
             restService.postRequest(PATH_TRANSFOMERS, id, botModel).enqueue(handler.callback)
@@ -38,65 +39,76 @@ class TransformersRepository(private val restService: RestService) {
 
     fun updateTransformer(botModel: BotModel, id: String): Observable<ResourceState> {
         val handler = RequestHandler<BotModel>()
-        if(checkInternetConnection(handler))
+        if (checkInternetConnection(handler))
             restService.putRequest(PATH_TRANSFOMERS, id, botModel).enqueue(handler.callback)
         return handler.publishSubject
     }
 
     fun deleteTransformer(botModel: BotModel, id: String): Observable<ResourceState> {
         val handler = RequestHandler<Void>()
-        if(checkInternetConnection(handler))
+        if (checkInternetConnection(handler))
             restService.deleteRequest("$PATH_TRANSFOMERS/${botModel.id}", id).enqueue(handler.callback)
         return handler.publishSubject
+    }
+
+    fun removeBotModel(state: ResourceState, botModel: BotModel, botDao: BotDao): Observable<ResourceState>{
+        return Observable.fromCallable {
+            when(state) {
+                is ResourceState.Success<*> -> {
+                    botDao.deleteBot(botModel)
+                    ResourceState.Success(Any())
+                }
+                else -> state
+            }
+        }
     }
 
     fun loadBotList(botDao: BotDao): Flowable<List<BotModel>> {
         return botDao.getAll()
     }
 
-    fun launchWar(list: List<BotModel>) : Observable<ResourceState> {
-        val publishSubject: PublishSubject<ResourceState> = PublishSubject.create()
+    fun launchWar(list: List<BotModel>): Observable<ResourceState> {
+        return Observable.create { emitter ->
+            val autoBotList: ArrayList<BotModel> = ArrayList()
+            val decepticonBotList: ArrayList<BotModel> = ArrayList()
 
-        val autoBotList: ArrayList<BotModel> = ArrayList()
-        val decepticonBotList: ArrayList<BotModel> = ArrayList()
+            for (botModel: BotModel in list) {
+                if (botModel.team == AppUtill.TEAM_A_KEY)
+                    autoBotList.add(botModel)
+                else
+                    decepticonBotList.add(botModel)
+            }
 
-        for (botModel: BotModel in list) {
-            if (botModel.team == AppUtill.TEAM_A_KEY)
-                autoBotList.add(botModel)
-            else
-                decepticonBotList.add(botModel)
-        }
+            autoBotList.sort()
+            decepticonBotList.sort()
+            var countAutoBotWinner: Int = 0;
+            var countDecipticon: Int = 0;
+            for (autoBot: BotModel in autoBotList) {
+                if (autoBot.name.contains("Optimus Prime") || autoBot.name.contains("Predaking")) {
+                    countAutoBotWinner++
+                }
+            }
+            for (decepticon: BotModel in decepticonBotList) {
+                if (decepticon.name.contains("Optimus Prime") || decepticon.name.contains("Predaking")) {
+                    countDecipticon++
+                }
+            }
 
-        autoBotList.sort()
-        decepticonBotList.sort()
-        var countAutoBotWinner: Int = 0;
-        var countDecipticon: Int = 0;
-        for (autoBot: BotModel in autoBotList) {
-            if (autoBot.name.contains("Optimus Prime") || autoBot.name.contains("Predaking")) {
-                countAutoBotWinner++
+            when {
+                (countAutoBotWinner + countDecipticon) > 1 -> {
+                    emitter.onNext(ResourceState.Success("all competitors destroyed"))
+                }
+                countAutoBotWinner > 0 -> {
+                    emitter.onNext(ResourceState.Success("Winning Team (Autobots)"))
+                }
+                countDecipticon > 0 -> {
+                    emitter.onNext(ResourceState.Success("Winning Team (Decipticons)"))
+                }
+                else -> {
+                    emitter.onNext(ResourceState.Success(processWar(autoBotList, decepticonBotList)))
+                }
             }
         }
-        for (decepticon: BotModel in decepticonBotList) {
-            if (decepticon.name.contains("Optimus Prime") || decepticon.name.contains("Predaking")) {
-                countDecipticon++
-            }
-        }
-
-        when {
-            (countAutoBotWinner + countDecipticon) > 1 -> {
-                publishSubject.onNext(ResourceState.Success("all competitors destroyed"))
-            }
-            countAutoBotWinner > 0 -> {
-                publishSubject.onNext(ResourceState.Success("Winning Team (Autobots)"))
-            }
-            countDecipticon > 0 -> {
-                publishSubject.onNext(ResourceState.Success("Winning Team (Decipticons)"))
-            }
-            else -> {
-                publishSubject.onNext(ResourceState.Success(processWar(autoBotList, decepticonBotList)))
-            }
-        }
-     return publishSubject
     }
 
     private fun processWar(listAutoBot: ArrayList<BotModel>, listDecipticons: ArrayList<BotModel>): String {

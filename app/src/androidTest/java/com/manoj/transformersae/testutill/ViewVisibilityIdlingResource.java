@@ -1,4 +1,4 @@
-package com.manoj.transformersae.TestUtill;
+package com.manoj.transformersae.testutill;
 
 import androidx.test.espresso.IdlingResource;
 import android.view.View;

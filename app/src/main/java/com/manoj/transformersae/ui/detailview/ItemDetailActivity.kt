@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.manoj.transformersae.R
@@ -190,6 +188,11 @@ class ItemDetailActivity : BaseActivity<DetailViewModel>() {
         }
     }
 
-    override fun setViewModel(): DetailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+    @VisibleForTesting
+    fun setupBarViewForTesting() {
+        setupCreateViews(false)
+    }
 
+    override fun setViewModel(): DetailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+    override fun setProgressView(): ProgressBar = findViewById(R.id.pbLoading)
 }

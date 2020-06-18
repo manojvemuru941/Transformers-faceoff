@@ -13,7 +13,7 @@
     tools:context=".ui.MainActivity">
 
     <!--
-    This layout is a two-pane layout for the Items
+    This progress_layout is a two-pane progress_layout for the Items
     master/detail flow.
     
     -->

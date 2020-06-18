@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
 object HttpModule {
-    private val timeOut = 20L //20Secs//
+    private const val timeOut = 20L //20Secs//
     /**
      * Provides the Web Api service implementation.
      * @param retrofit the Retrofit object used to instantiate the service

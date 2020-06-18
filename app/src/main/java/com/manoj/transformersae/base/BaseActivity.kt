@@ -21,7 +21,7 @@ import com.manoj.transformersae.util.UIUtil
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     abstract fun setViewModel(): T
-
+    abstract fun setProgressView(): ProgressBar
     protected val viewModel: T by lazy { setViewModel() }
 
     private var errorSnackbar: Snackbar? = null
@@ -37,6 +37,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         registerToShowError()
+        registerToShowProgress()
     }
 
     open fun registerToShowError() {
@@ -61,7 +62,15 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
         errorSnackbar?.dismiss()
     }
 
-    open fun setProgressView(): ProgressBar = ProgressBar(this)
+    open fun registerToShowProgress() {
+        viewModel.loadingVisibility.observe(this, Observer {
+            handleProgressBar(it)
+        })
+    }
+
+    open fun handleProgressBar(visibility : Int) {
+        progressBar.visibility = visibility
+    }
 
     @CallSuper
     open fun handleMutualViewType(viewTypeState: ViewState) {
@@ -83,15 +92,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
         finish()
     }
 
-    public fun getBaseViewModel(): BaseViewModel = viewModel
-
-    fun goBack() {
-        super.onBackPressed()
-    }
-
-    override fun onBackPressed() {
-        viewModel.onDeviceBackPressed()
-    }
+    fun getBaseViewModel(): BaseViewModel = viewModel
 
     private val nextViewObserver = Observer<ViewState> {
         handleMutualViewType(it)

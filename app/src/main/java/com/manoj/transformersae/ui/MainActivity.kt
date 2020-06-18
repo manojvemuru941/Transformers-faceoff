@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.databinding.DataBindingUtil
@@ -20,6 +21,7 @@ import com.manoj.transformersae.util.AppUtill
 import com.manoj.transformersae.util.AppUtill.VIEW_TYPE_KEY
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
+import kotlinx.android.synthetic.main.progress_layout.view.*
 
 
 /**
@@ -39,8 +41,6 @@ class MainActivity : BaseActivity<MainViewModel>(), View.OnClickListener {
     private var twoPane: Boolean = false
 
     private lateinit var mFragmentList: FragmentList
-//    private lateinit var mDisposable:Disposable
-//    private lateinit var mwarDisposable:Disposable
     private lateinit var mDialog: Dialog
     private lateinit var activityItemListBinding: ActivityItemListBinding
 
@@ -48,9 +48,6 @@ class MainActivity : BaseActivity<MainViewModel>(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         activityItemListBinding = DataBindingUtil.setContentView(this, R.layout.activity_item_list)
         activityItemListBinding.lifecycleOwner = this
-//        setSupportActionBar(toolbar)
-//        toolbar.title = title
-
         fab.setOnClickListener { _->
             goToCreateView()
         }
@@ -84,8 +81,6 @@ class MainActivity : BaseActivity<MainViewModel>(), View.OnClickListener {
         if (list.isNotEmpty()) {
             viewModel.allBots = list
             viewModel.mutableBotFragmentLiveData.value = list
-        } else {
-            goToCreateView()
         }
     }
 
@@ -148,13 +143,17 @@ class MainActivity : BaseActivity<MainViewModel>(), View.OnClickListener {
     }
 
     @VisibleForTesting
-    fun getDialogView() : Dialog? {
-        return if(mDialog != null) {
+    fun getDialogView() : Dialog {
+        return if(::mDialog.isInitialized) {
             mDialog
         } else {
-            null
+            mDialog = Dialog(this);
+            mDialog.setContentView(R.layout.dialog_layout)
+            mDialog
         }
     }
 
     override fun setViewModel(): MainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+    override fun setProgressView(): ProgressBar = activityItemListBinding.layoutProgress.pbLoading
 }

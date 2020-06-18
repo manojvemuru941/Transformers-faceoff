@@ -44,6 +44,11 @@ object AppUtill {
         return prefs.getString(PREFERENCE_TOKEN, "")
     }
 
+    fun deleteToken(context: Context){
+        val prefs = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        prefs.edit().remove(PREFERENCE_TOKEN).apply()
+    }
+
     fun verifyAvailableNetwork(): Boolean {
         val connectivityManager =
                 getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -61,9 +66,6 @@ object AppUtill {
         if (centerCrop) builder.centerCrop()
         builder.into(target)
     }
-
-    fun getBackoffDelay(attempt: Long) = INITIAL_BACKOFF * (attempt + 1)
-
     /**
      * Provides String from resources
      */
