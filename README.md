@@ -52,7 +52,7 @@ A UI class that handles input actions for create transoformer Button and start a
 ### FragmentList
 A Part of list of Transformer UI that handles list transoformers to populate to user using [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView) and [RecyclerView.Adapter](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter)
 
-![Alt text](https://raw.githubusercontent.com/manojvemuru941/Practice/master/TransformersAE/screenshots/Main%20Screen.png)
+![Alt text](https://github.com/manojvemuru941/Transformers-faceoff/blob/master/screenshots/Main%20Screen.png)
 
 ### ItemDetailActivity
 A UI class that handles Viewing, Creating and Updating individual transformers
@@ -60,9 +60,9 @@ A UI class that handles Viewing, Creating and Updating individual transformers
 ### ItemDetailFragment
 A Part of UI of Viewing, Creating and Updating individual transformers which handles showing and handling criteria views
 
-![Alt text](https://raw.githubusercontent.com/manojvemuru941/Practice/master/TransformersAE/screenshots/Create.png)
-![Alt text](https://raw.githubusercontent.com/manojvemuru941/Practice/master/TransformersAE/screenshots/Update.png)
-![Alt text](https://raw.githubusercontent.com/manojvemuru941/Practice/master/TransformersAE/screenshots/View1.png)
-![Alt text](https://raw.githubusercontent.com/manojvemuru941/Practice/master/TransformersAE/screenshots/View2.png)
+![Alt text](https://github.com/manojvemuru941/Transformers-faceoff/blob/master/screenshots/Create.png)
+![Alt text](https://github.com/manojvemuru941/Transformers-faceoff/blob/master/screenshots/Update.png)
+![Alt text](https://github.com/manojvemuru941/Transformers-faceoff/blob/master/screenshots/View1.png)
+![Alt text](https://github.com/manojvemuru941/Transformers-faceoff/blob/master/screenshots/View2.png)
 
 
